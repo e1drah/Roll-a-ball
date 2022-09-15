@@ -8,17 +8,22 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
     public TextMeshProUGUI countText;
+    public GameObject winTextObject;
+    public GameObject Player;
+    public Vector3 SpawnPoint;
 
     private Rigidbody rb;
     private int count;
     private float movementX;
     private float movementY;
+    
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
+        winTextObject.SetActive(false);
     }
 
     void OnMove(InputValue movementValue)
@@ -32,6 +37,10 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count:" + count.ToString();
+        if (count >= 28)
+        {
+            winTextObject.SetActive(true);
+        }
     }
     void FixedUpdate()
     {
@@ -41,12 +50,16 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Pickup"))
+        if (other.gameObject.CompareTag("Pickup"))
         {
             other.gameObject.SetActive(false);
             count += 1;
 
             SetCountText();
+        }
+        if (other.gameObject.CompareTag("Respawn"))
+        {
+            Player.gameObject.transform.position = SpawnPoint;
         }
     }
 }
