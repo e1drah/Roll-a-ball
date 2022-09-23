@@ -12,7 +12,17 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI keytext;
     public TextMeshProUGUI Timer;
     public TextMeshProUGUI levelCount;
+    public TextMeshProUGUI finalScore;
+    public TextMeshProUGUI finaleTime;
     public GameObject winText;
+
+    //audio
+    public AudioSource winLevel;
+    public AudioSource loseLevel;
+    public AudioSource fallOffLevel;
+    public AudioSource pickupCube;
+    public AudioSource pickupKey;
+    public AudioSource jump;
 
     public GameObject Player;
     public GameObject Key;
@@ -42,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
     public int bounce;
 
+    public int levelAmount;
+
     private Rigidbody rb;
 
     //private Vector3 stop = (0, 0, 0);
@@ -51,6 +63,13 @@ public class PlayerController : MonoBehaviour
 
     private int count;
     private int lvlCount = 1;
+
+    private float secondTimeFloat;
+    private int secondTimeInt;
+    private int minuteTime;
+
+    private float timer;
+    //don't know why this is public but I'm to scared to change it
     public int keyCount;
 
     // Start is called before the first frame update
@@ -71,12 +90,39 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
     }
 
-    //counts how many cubes the player collected 
+    //Hud of the game 
     void SetHudText()
     {
         levelCount.text = "Level: " + lvlCount.ToString();
         keytext.text = "Keys left: " + keyCount.ToString();
-        countText.text = "Count: " + count.ToString();
+        countText.text = "Score: " + count.ToString();
+        if (secondTimeInt < 10)
+        {
+            Timer.text = "Time: " + minuteTime.ToString() + ":0" + secondTimeInt.ToString();
+        }
+        else
+        {
+            Timer.text = "Time: " + minuteTime.ToString() + ":" + secondTimeInt.ToString();
+        }
+    }
+    //Win screen
+    void SetWinText()
+    {
+        levelCount.text = "";
+        keytext.text = "";
+        countText.text = "";
+        Timer.text = "";
+
+        winText.gameObject.SetActive(true);
+        finalScore.text = "Final score: " + count.ToString();
+        if (secondTimeInt < 10)
+        {
+            finaleTime.text = "Final time: " + minuteTime.ToString() + ":0" + secondTimeInt.ToString();
+        }
+        else
+        {
+            finaleTime.text = "Final time: " + minuteTime.ToString() + ":" + secondTimeInt.ToString();
+        }
     }
     //moves the player
     void FixedUpdate()
@@ -84,6 +130,18 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movement * speed);
+        if (levelAmount != lvlCount)
+        {
+            secondTimeFloat += Time.deltaTime;
+            secondTimeInt = Mathf.RoundToInt(secondTimeFloat);
+            if (secondTimeInt >= 60)
+            {
+                secondTimeFloat = 0;
+                minuteTime += 1;
+            }
+            SetHudText();
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -92,7 +150,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count += 1;
-
+            pickupCube.Play();
             SetHudText();
         }
         //counting which level the player will respawn to
@@ -103,6 +161,7 @@ public class PlayerController : MonoBehaviour
         //Respawning the player
         if (other.gameObject.CompareTag("Respawn"))
         {
+            fallOffLevel.Play();
             if (lvlCount == 1)
             {
                 Player.gameObject.transform.position = spawnPoint1.gameObject.transform.position;
@@ -137,6 +196,7 @@ public class PlayerController : MonoBehaviour
                     SetHudText();
                     Player.gameObject.transform.position = spawnPoint1.gameObject.transform.position;
                     rb.AddForce(0,0,0);
+                    winLevel.Play();
                 }
                 if (lvlCount == 2)
                 {
@@ -144,6 +204,7 @@ public class PlayerController : MonoBehaviour
                     SetHudText();
                     Player.gameObject.transform.position = spawnPoint2.gameObject.transform.position;
                     rb.AddForce(0, 0, 0);
+                    winLevel.Play();
                 }
                 if (lvlCount == 3)
                 {
@@ -151,6 +212,7 @@ public class PlayerController : MonoBehaviour
                     SetHudText();
                     Player.gameObject.transform.position = spawnPoint3.gameObject.transform.position;
                     rb.AddForce(0, 0, 0);
+                    winLevel.Play();
                 }
                 if (lvlCount == 4)
                 {
@@ -158,22 +220,31 @@ public class PlayerController : MonoBehaviour
                     SetHudText();
                     Player.gameObject.transform.position = spawnPoint4.gameObject.transform.position;
                     rb.AddForce(0, 0, 0);
-
+                    winLevel.Play();
                 }
                 if (lvlCount == 5)
                 {
                     keyCount = lvl5Keys;
-                    winText.gameObject.SetActive(true);
                     SetHudText();
                     Player.gameObject.transform.position = spawnPoint5.gameObject.transform.position;
                     rb.AddForce(0, 0, 0);
+                    winLevel.Play();
                 }
+                if (lvlCount == levelAmount)
+                {
+                    SetWinText();
+                }
+            }
+            else
+            {
+                loseLevel.Play(); 
             }
              
         }
             //send the player up
         if (other.gameObject.CompareTag("Bounce"))
         {
+            jump.Play();
             rb.AddForce(Vector3.up * bounce);
         }
             //Player picking up the keys
@@ -181,7 +252,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             keyCount -= 1;
-            
+            pickupKey.Play();
             SetHudText();
         }
 
