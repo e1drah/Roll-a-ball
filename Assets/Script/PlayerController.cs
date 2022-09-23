@@ -12,19 +12,20 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI keytext;
     public TextMeshProUGUI Timer;
     public TextMeshProUGUI levelCount;
+    public GameObject winText;
 
     public GameObject Player;
     public GameObject Key;
     //Spawnpoints
     public GameObject spawnPoint1;
     public GameObject spawnPoint2;
-    public GameObject SpawnPoint3;
-    public GameObject SpawnPoint4;
-    public GameObject SpawnPoint5;
-    public GameObject SpawnPoint6;
-    public GameObject SpawnPoint7;
-    public GameObject SpawnPoint8;
-    public GameObject SpawnPoint9;
+    public GameObject spawnPoint3;
+    public GameObject spawnPoint4;
+    public GameObject spawnPoint5;
+    public GameObject spawnPoint6;
+    public GameObject spawnPoint7;
+    public GameObject spawnPoint8;
+    public GameObject spawnPoint9;
     public GameObject SpawnPoint10;
 
     //Amount of keys needed to compleate the level
@@ -39,20 +40,23 @@ public class PlayerController : MonoBehaviour
     public int lvl9Keys;
     public int lvl10Keys;
 
-    public int bounce; 
+    public int bounce;
 
     private Rigidbody rb;
+
+    //private Vector3 stop = (0, 0, 0);
 
     private float movementX;
     private float movementY;
 
     private int count;
     private int lvlCount = 1;
-    private int keyCount;
-    
+    public int keyCount;
+
     // Start is called before the first frame update
     void Start()
     {
+        winText.gameObject.SetActive(false);
         keyCount = lvl1Keys;
         rb = GetComponent<Rigidbody>();
         count = 0;
@@ -66,7 +70,7 @@ public class PlayerController : MonoBehaviour
         movementX = movementVector.x;
         movementY = movementVector.y;
     }
-     
+
     //counts how many cubes the player collected 
     void SetHudText()
     {
@@ -77,7 +81,7 @@ public class PlayerController : MonoBehaviour
     //moves the player
     void FixedUpdate()
     {
-        Vector3 movement = new Vector3(movementX,0.0f, movementY);
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movement * speed);
     }
@@ -92,53 +96,94 @@ public class PlayerController : MonoBehaviour
             SetHudText();
         }
         //counting which level the player will respawn to
-        if (other.gameObject.CompareTag("End"))
-        {
-            lvlCount += 1;
-        }
+        //if (other.gameObject.CompareTag("End"))
+        //{
+        //    lvlCount += 1;
+        //}
         //Respawning the player
         if (other.gameObject.CompareTag("Respawn"))
         {
             if (lvlCount == 1)
-            {   
+            {
                 Player.gameObject.transform.position = spawnPoint1.gameObject.transform.position;
             }
-            if(lvlCount == 2)
+            if (lvlCount == 2)
             {
                 Player.gameObject.transform.position = spawnPoint2.gameObject.transform.position;
             }
-
+            if (lvlCount == 3)
+            {
+                Player.gameObject.transform.position = spawnPoint3.gameObject.transform.position;
+            }
+            if (lvlCount == 4)
+            {
+                Player.gameObject.transform.position = spawnPoint4.gameObject.transform.position;
+            }
+            if (lvlCount == 5)
+            {
+                Player.gameObject.transform.position = spawnPoint5.gameObject.transform.position;
+            }
         }
         //sends the player to the next lvl
         if (other.gameObject.CompareTag("nextlvl"))
         {
-            //if (lvlCount == 1)
-            //{
-            //    keyCount = lvl1Keys;
-            //    SetHudText();
-            //    Player.gameObject.transform.position = spawnPoint1.gameObject.transform.position;
-            //}
-            if (lvlCount == 2)
-            {
-                keyCount = lvl2Keys;
-                SetHudText();
-                Player.gameObject.transform.position = spawnPoint2.gameObject.transform.position;
-            }
+            if (keyCount == 0)
+            { 
+                lvlCount += 1;
 
+                if (lvlCount == 1)
+                {
+                    keyCount = lvl1Keys;
+                    SetHudText();
+                    Player.gameObject.transform.position = spawnPoint1.gameObject.transform.position;
+                    rb.AddForce(0,0,0);
+                }
+                if (lvlCount == 2)
+                {
+                    keyCount += lvl2Keys;
+                    SetHudText();
+                    Player.gameObject.transform.position = spawnPoint2.gameObject.transform.position;
+                    rb.AddForce(0, 0, 0);
+                }
+                if (lvlCount == 3)
+                {
+                    keyCount = lvl3Keys;
+                    SetHudText();
+                    Player.gameObject.transform.position = spawnPoint3.gameObject.transform.position;
+                    rb.AddForce(0, 0, 0);
+                }
+                if (lvlCount == 4)
+                {
+                    keyCount = lvl4Keys;
+                    SetHudText();
+                    Player.gameObject.transform.position = spawnPoint4.gameObject.transform.position;
+                    rb.AddForce(0, 0, 0);
+
+                }
+                if (lvlCount == 5)
+                {
+                    keyCount = lvl5Keys;
+                    winText.gameObject.SetActive(true);
+                    SetHudText();
+                    Player.gameObject.transform.position = spawnPoint5.gameObject.transform.position;
+                    rb.AddForce(0, 0, 0);
+                }
+            }
+             
         }
-        //send the player up
+            //send the player up
         if (other.gameObject.CompareTag("Bounce"))
         {
             rb.AddForce(Vector3.up * bounce);
         }
-        //Player picking up the keys
+            //Player picking up the keys
         if (other.gameObject.CompareTag("Key"))
         {
             other.gameObject.SetActive(false);
             keyCount -= 1;
-
+            
             SetHudText();
         }
 
+        }
     }
-}
