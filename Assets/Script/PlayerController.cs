@@ -7,13 +7,15 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
-
+    //UI
     public TextMeshProUGUI countText;
     public TextMeshProUGUI keytext;
     public TextMeshProUGUI Timer;
     public TextMeshProUGUI levelCount;
     public TextMeshProUGUI finalScore;
     public TextMeshProUGUI finaleTime;
+    public TextMeshProUGUI HighScore;
+    public TextMeshProUGUI FastTime;
     public GameObject winText;
 
     //audio
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public int lvl8Keys;
     public int lvl9Keys;
     public int lvl10Keys;
-
+    //how high the bounce pad sends you
     public int bounce;
 
     public int levelAmount;
@@ -64,9 +66,19 @@ public class PlayerController : MonoBehaviour
     private int count;
     private int lvlCount = 1;
 
-    private float secondTimeFloat;
-    private int secondTimeInt;
+    private int secondTime;
     private int minuteTime;
+
+    // High score
+    private int minuteTimeFastest;
+    private int secondTimeFastest;
+
+    //use to determin Fastest Time
+    private float totalTime;
+    private float totalTimeFastest;
+
+    //
+    private int highScore;
 
     private float timer;
     //don't know why this is public but I'm to scared to change it
@@ -75,6 +87,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        totalTimeFastest = PlayerPrefs.GetFloat("totalTimeFastest", 120);
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+
         winText.gameObject.SetActive(false);
         keyCount = lvl1Keys;
         rb = GetComponent<Rigidbody>();
@@ -96,13 +111,13 @@ public class PlayerController : MonoBehaviour
         levelCount.text = "Level: " + lvlCount.ToString();
         keytext.text = "Keys left: " + keyCount.ToString();
         countText.text = "Score: " + count.ToString();
-        if (secondTimeInt < 10)
+        if (secondTime < 10)
         {
-            Timer.text = "Time: " + minuteTime.ToString() + ":0" + secondTimeInt.ToString();
+            Timer.text = "Time: " + minuteTime.ToString() + ":0" + secondTime.ToString();
         }
         else
         {
-            Timer.text = "Time: " + minuteTime.ToString() + ":" + secondTimeInt.ToString();
+            Timer.text = "Time: " + minuteTime.ToString() + ":" + secondTime.ToString();
         }
     }
     //Win screen
@@ -114,15 +129,35 @@ public class PlayerController : MonoBehaviour
         Timer.text = "";
 
         winText.gameObject.SetActive(true);
-        finalScore.text = "Final score: " + count.ToString();
-        if (secondTimeInt < 10)
+        finalScore.text = "Your score: " + count.ToString();
+        if (secondTime < 10)
         {
-            finaleTime.text = "Final time: " + minuteTime.ToString() + ":0" + secondTimeInt.ToString();
+            finaleTime.text = "Your time: " + minuteTime.ToString() + ":0" + secondTime.ToString();
         }
         else
         {
-            finaleTime.text = "Final time: " + minuteTime.ToString() + ":" + secondTimeInt.ToString();
+            finaleTime.text = "Your time: " + minuteTime.ToString() + ":" + secondTime.ToString();
         }
+        if (totalTime < totalTimeFastest)
+        {
+            PlayerPrefs.SetFloat("totalTimeFastest", totalTime);
+            minuteTimeFastest = minuteTime;
+            secondTimeFastest = secondTime;
+        }
+        if (secondTimeFastest < 10)
+        {
+            FastTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":0" + secondTimeFastest.ToString();
+        }
+        else
+        {
+            FastTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":" + secondTimeFastest.ToString();
+        }
+        if (count > highScore)
+        {
+            PlayerPrefs.SetInt("HighScore", count);
+            highScore = count;
+        }
+        HighScore.text = "High score: " + highScore.ToString();
     }
     //moves the player
     void FixedUpdate()
@@ -132,11 +167,11 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(movement * speed);
         if (levelAmount != lvlCount)
         {
-            secondTimeFloat += Time.deltaTime;
-            secondTimeInt = Mathf.RoundToInt(secondTimeFloat);
-            if (secondTimeInt >= 60)
+            totalTime += Time.deltaTime;
+            secondTime = Mathf.RoundToInt(totalTime);
+            if (secondTime >= 60)
             {
-                secondTimeFloat = 0;
+                totalTime = 0;
                 minuteTime += 1;
             }
             SetHudText();
@@ -233,6 +268,7 @@ public class PlayerController : MonoBehaviour
                 if (lvlCount == levelAmount)
                 {
                     SetWinText();
+                    Player.gameObject.SetActive(false);
                 }
             }
             else
@@ -257,4 +293,10 @@ public class PlayerController : MonoBehaviour
         }
 
         }
+    public void Reset()
+    {
+        PlayerPrefs.SetFloat("totalTimeFastest", 120);
+        PlayerPrefs.SetInt("HighScore", 0);
+        loseLevel.Play();
     }
+}
