@@ -14,9 +14,12 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI levelCount;
     public TextMeshProUGUI finalScore;
     public TextMeshProUGUI finaleTime;
-    public TextMeshProUGUI HighScore;
-    public TextMeshProUGUI FastTime;
+    public TextMeshProUGUI finalHighScore;
+    public TextMeshProUGUI finalBestTime;
+    public TextMeshProUGUI highScoreDisplay;
+    public TextMeshProUGUI bestTime;
     public GameObject winText;
+    public GameObject resetButton;
 
     //audio
     public AudioSource winLevel;
@@ -88,9 +91,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         totalTimeFastest = PlayerPrefs.GetFloat("totalTimeFastest", 120);
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScore = PlayerPrefs.GetInt("finalHighScore", 0);
 
         winText.gameObject.SetActive(false);
+        resetButton.gameObject.SetActive(false);
+
         keyCount = lvl1Keys;
         rb = GetComponent<Rigidbody>();
         count = 0;
@@ -111,6 +116,15 @@ public class PlayerController : MonoBehaviour
         levelCount.text = "Level: " + lvlCount.ToString();
         keytext.text = "Keys left: " + keyCount.ToString();
         countText.text = "Score: " + count.ToString();
+        highScoreDisplay.text = "HighScore: " + PlayerPrefs.GetInt("finalHighScore", 0).ToString();
+        if (secondTimeFastest < 10)
+        {
+            bestTime.text = "Best Time: " + minuteTimeFastest.ToString() + ":0" + secondTimeFastest.ToString();
+        }
+        else
+        {
+            bestTime.text = "Best Time: " + minuteTimeFastest.ToString() + ":" + secondTimeFastest.ToString();
+        }
         if (secondTime < 10)
         {
             Timer.text = "Time: " + minuteTime.ToString() + ":0" + secondTime.ToString();
@@ -129,6 +143,8 @@ public class PlayerController : MonoBehaviour
         Timer.text = "";
 
         winText.gameObject.SetActive(true);
+        resetButton.gameObject.SetActive(true);
+
         finalScore.text = "Your score: " + count.ToString();
         if (secondTime < 10)
         {
@@ -146,18 +162,18 @@ public class PlayerController : MonoBehaviour
         }
         if (secondTimeFastest < 10)
         {
-            FastTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":0" + secondTimeFastest.ToString();
+            finalBestTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":0" + secondTimeFastest.ToString();
         }
         else
         {
-            FastTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":" + secondTimeFastest.ToString();
+            finalBestTime.text = "Fastest time: " + minuteTimeFastest.ToString() + ":" + secondTimeFastest.ToString();
         }
         if (count > highScore)
         {
-            PlayerPrefs.SetInt("HighScore", count);
+            PlayerPrefs.SetInt("finalHighScore", count);
             highScore = count;
         }
-        HighScore.text = "High score: " + highScore.ToString();
+        finalHighScore.text = "High score: " + highScore.ToString();
     }
     //moves the player
     void FixedUpdate()
@@ -296,7 +312,7 @@ public class PlayerController : MonoBehaviour
     public void Reset()
     {
         PlayerPrefs.SetFloat("totalTimeFastest", 120);
-        PlayerPrefs.SetInt("HighScore", 0);
+        PlayerPrefs.SetInt("finalHighScore", 0);
         loseLevel.Play();
     }
 }
