@@ -84,8 +84,12 @@ public class PlayerController : MonoBehaviour
     private int highScore;
 
     private float timer;
-    //don't know why this is public but I'm to scared to change it
+
+    //don't know why this is public but I'm too scared to change it
     public int keyCount;
+
+    //mousePosition
+    
 
     // Start is called before the first frame update
     void Start()
@@ -100,6 +104,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetHudText();
+    }
+
+    private void Update()
+    {
+    
     }
     //Moves the player
     void OnMove(InputValue movementValue)
