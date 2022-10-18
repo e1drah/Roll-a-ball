@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-    
     }
     //Moves the player
     void OnMove(InputValue movementValue)
@@ -306,6 +305,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Bounce"))
         {
             jump.Play();
+            rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.up * bounce);
         }
             //Player picking up the keys
