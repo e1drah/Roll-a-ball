@@ -110,13 +110,13 @@ public class PlayerController : MonoBehaviour
     {
     }
     //Moves the player
-    void OnMove(InputValue movementValue)
-    {
-        Vector2 movementVector = movementValue.Get<Vector2>();
-
-        movementX = movementVector.x;
-        movementY = movementVector.y;
-    }
+   // void OnMove(InputValue movementValue)
+   // {
+   //     Vector2 movementVector = movementValue.Get<Vector2>();
+   //
+   //     movementX = movementVector.x;
+   //     movementY = movementVector.y;
+   // }
 
     //Hud of the game 
     void SetHudText()
@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Bounce"))
         {
             jump.Play();
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
             rb.AddForce(Vector3.up * bounce);
         }
             //Player picking up the keys
