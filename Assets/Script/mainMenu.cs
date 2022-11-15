@@ -14,12 +14,16 @@ public class mainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    public void Control()
+    public void Controls()
     {
         SceneManager.LoadScene("Instructions");
     }
     public void ReturnToMenu()
     {
         SceneManager.LoadScene("Main Menu");
+    }
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits");
     }
 }

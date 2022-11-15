@@ -11,7 +11,7 @@ public class LevelSelector : MonoBehaviour
         switch(levelNumber)
         {
             case 1:
-                SceneManager.LoadScene("test");
+                SceneManager.LoadScene("Show case");
                 break;
         }
     }
