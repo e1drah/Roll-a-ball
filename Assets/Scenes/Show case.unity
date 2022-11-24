@@ -139,7 +139,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51626
+  m_Name: pb_Mesh60244
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -32133,7 +32133,7 @@ PrefabInstance:
     - target: {fileID: 5761992073557420748, guid: b96e7d1e7b053c349a6618c51af17b89, type: 3}
       propertyPath: resetButton
       value: 
-      objectReference: {fileID: 1980121722}
+      objectReference: {fileID: 0}
     - target: {fileID: 5761992073557420748, guid: b96e7d1e7b053c349a6618c51af17b89, type: 3}
       propertyPath: spawnPoint1
       value: 
@@ -45547,7 +45547,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51540
+  m_Name: pb_Mesh60146
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -94134,7 +94134,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51582
+  m_Name: pb_Mesh60194
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -94594,13 +94594,52 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -189
       objectReference: {fileID: 0}
+    - target: {fileID: 1783098439740641712, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647156335858071900, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -895
+      objectReference: {fileID: 0}
+    - target: {fileID: 2647156335858071900, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312711344842477728, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -914.6354
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312711344842477728, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 186.87836
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450425609527849955, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -828
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450425609527849955, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595529224464003927, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00021362305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893810744602183588, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983473198792206219, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -784
+      objectReference: {fileID: 0}
+    - target: {fileID: 6983473198792206219, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 11.535955
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
---- !u!1 &1980121722 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1276473041220945737, guid: feca5f42b9ffcfc4a845294680940362, type: 3}
-  m_PrefabInstance: {fileID: 1980121721}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1980121723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1276473041583056684, guid: feca5f42b9ffcfc4a845294680940362, type: 3}

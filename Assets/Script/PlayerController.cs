@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI highScoreDisplay;
     public TextMeshProUGUI bestTime;
     public GameObject winText;
-    public GameObject resetButton;
+    //public GameObject resetButton;
 
     //audio
     public AudioSource winLevel;
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
         highScore = PlayerPrefs.GetInt("finalHighScore", 0);
 
         winText.gameObject.SetActive(false);
-        resetButton.gameObject.SetActive(false);
+        //resetButton.gameObject.SetActive(false);
 
         keyCount = lvl1Keys;
         rb = GetComponent<Rigidbody>();
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
         Timer.text = "";
 
         winText.gameObject.SetActive(true);
-        resetButton.gameObject.SetActive(true);
+        //resetButton.gameObject.SetActive(true);
 
         finalScore.text = "Your score: " + count.ToString();
         if (secondTime < 10)
@@ -291,8 +292,10 @@ public class PlayerController : MonoBehaviour
                 }
                 if (lvlCount == levelAmount)
                 {
-                    SetWinText();
-                    Player.gameObject.SetActive(false);
+
+                    //SetWinText();
+                    //Player.gameObject.SetActive(false);
+                    SceneManager.LoadScene("Level select 1");
                 }
             }
             else
