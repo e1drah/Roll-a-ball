@@ -38,11 +38,12 @@ public class PauseMenu : MonoBehaviour
     public void BackToHub()
     {
         SceneManager.LoadScene("Level select 1");
+        Time.timeScale = 1f;
     }
     public void BackToMenu()
     {
         SceneManager.LoadScene("Main Menu");
-
+        Time.timeScale = 1f;
     }
     public void Quit()
     {
