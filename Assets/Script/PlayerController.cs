@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     //how high the bounce pad sends you
     public int bounce;
 
+    public int level;
+
     public int levelAmount;
 
     private Rigidbody rb;
@@ -295,6 +297,7 @@ public class PlayerController : MonoBehaviour
 
                     //SetWinText();
                     //Player.gameObject.SetActive(false);
+                    Singleton.levelComplete[level] = true;
                     SceneManager.LoadScene("Level select 1");
                 }
             }

@@ -32075,6 +32075,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1980121731}
     - target: {fileID: 5761992073557420748, guid: b96e7d1e7b053c349a6618c51af17b89, type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5761992073557420748, guid: b96e7d1e7b053c349a6618c51af17b89, type: 3}
       propertyPath: bounce
       value: 300
       objectReference: {fileID: 0}
